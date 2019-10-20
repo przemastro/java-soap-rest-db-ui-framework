@@ -1,0 +1,12 @@
+browser: "chrome"
+# options: headless, maximize
+browser_options: "no-proxy,maximize"
+frontend_url: "http://google.com"
+backend_url: ""
+api_resources_path: "src/test/resources/api/"
+
+db_connection_string: ""
+
+# Credentials
+login: ""
+password: ""
