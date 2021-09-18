@@ -2,7 +2,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/przemastro/java-soap-rest-db-ui-framework)](https://github.com/przemastro/java-soap-rest-db-ui-framework/issues)
 [![GitHub forks](https://img.shields.io/github/forks/przemastro/java-soap-rest-db-ui-framework)](https://github.com/przemastro/java-soap-rest-db-ui-framework/network)
 [![GitHub stars](https://img.shields.io/github/stars/przemastro/java-soap-rest-db-ui-framework)](https://github.com/przemastro/java-soap-rest-db-ui-framework/stargazers)
-[![Java version](https://img.shields.io/badge/Java-1.8-%23b07219)](https://github.com/przemastro/java-soap-rest-db-ui-framework)
+[![Java version](https://img.shields.io/badge/Java-1.11-%23b07219)](https://github.com/przemastro/java-soap-rest-db-ui-framework)
 
 # Features
 This is a demo version of framework I used for teaching new young guns a tests automation. It contains of:
@@ -14,7 +14,7 @@ This is a demo version of framework I used for teaching new young guns a tests a
 
 # Installation
 
-1. Open repo in your favourite IDE (I use Intellij because of built-in Maven) and set Project SDK to "java version 1.8.0_*"
+1. Open repo in your favourite IDE (I use Intellij because of built-in Maven) and set Project SDK to "java version 1.11.0_*"
 2. Right click on pom.xml and set MAVEN project, you might need to re-import maven dependencies
 
 # Run
