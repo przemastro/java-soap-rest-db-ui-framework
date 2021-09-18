@@ -5,7 +5,7 @@
 [![Java version](https://img.shields.io/badge/Java-1.11-%23b07219)](https://github.com/przemastro/java-soap-rest-db-ui-framework)
 
 # Features
-This is a demo version of framework I used for teaching new young guns a tests automation. It contains of:
+This is a demo version of framework I created to teach young guns of tests automation. It contains of:
 
 1. API (SOAP, REST) tests - Using RestAssured and TestNg frameworks
 2. UI - Selenium
