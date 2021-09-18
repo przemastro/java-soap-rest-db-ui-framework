@@ -1,0 +1,122 @@
+package com.company.qa.steps.db;
+
+import com.company.qa.models.QueryModel;
+import com.company.qa.utils.DataUtil;
+import com.company.qa.utils.QueryExecutor;
+import com.company.qa.DatabaseTest;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+public class DbCommonSteps extends DatabaseTest {
+
+    private QueryExecutor queryExecutor = new QueryExecutor();
+
+    @Given("Ładuję dane testowe z pliku {string}")
+    public void execQuery(String fileName) throws SQLException, IOException {
+        final String query = DataUtil.readQueryFromFile(fileName);
+        queryExecutor = new QueryExecutor().execQuery(query);
+    }
+
+    @And("Ładuję dane testowe z pliku {string} z wartością wejściową {string}")
+    public void execQueryWithParameter(String fileName, String parameterValue) throws SQLException, IOException {
+        QueryModel.QueryModelBuilder queryBuilder = QueryModel.builder();
+        queryBuilder.parameterValue(parameterValue);
+
+        final String query = DataUtil.readQueryFromFile(fileName);
+        queryExecutor = new QueryExecutor().execQueryWithParameter(query, queryBuilder.build());
+    }
+
+    @Given("Uruchomię procedurę {string} z pliku {string} z parametrem {string} i wartością {string}")
+    public void execProcedureWithParameter(String procedureName, String fileName, String parameterName, String parameterValue) throws SQLException, IOException {
+        QueryModel.QueryModelBuilder queryBuilder = QueryModel.builder();
+        queryBuilder.procedureName(procedureName);
+        queryBuilder.parameterName(parameterName);
+        queryBuilder.parameterValue(parameterValue);
+
+        final String query = DataUtil.readQueryFromFile(fileName);
+        queryExecutor = new QueryExecutor().execProcedureWithParameter(query, queryBuilder.build());
+    }
+
+    @And("Uruchomię procedurę {string} z pliku {string}")
+    public void executeProcedure(String procedureName, String fileName) throws SQLException, IOException {
+        QueryModel.QueryModelBuilder queryBuilder = QueryModel.builder();
+        queryBuilder.procedureName(procedureName);
+
+        final String query = DataUtil.readQueryFromFile(fileName);
+        queryExecutor = new QueryExecutor().execProcedure(query, queryBuilder.build());
+    }
+
+    @Given("Ilość rekordów w tabeli {string} wynosi {int}")
+    public void countRowsInTable(String tableName, int expectedResult) throws SQLException, IOException {
+        QueryModel.QueryModelBuilder queryBuilder = QueryModel.builder();
+        queryBuilder.tableName(tableName);
+
+        final String query = DataUtil.readQueryFromFile("Scripts/countScript.sql");
+        queryExecutor = new QueryExecutor().countRowsInTable(query, expectedResult, queryBuilder.build());
+    }
+
+    @And("Ilość rekordów w tabeli {string} wynosi {int} gdy przefiltruję po kolumnie {string} wartością {string}")
+    public void countRowsInTableWithAppliedFilter(String tableName, int expectedResult, String filterName, String filterValue) throws SQLException, IOException {
+        QueryModel.QueryModelBuilder queryBuilder = QueryModel.builder();
+        queryBuilder.tableName(tableName);
+        queryBuilder.filterName(filterName);
+        queryBuilder.filterValue(filterValue);
+
+        final String query = DataUtil.readQueryFromFile("countScriptWithParameter.sql");
+        queryExecutor = new QueryExecutor().countRowsInTableWithAppliedFilter(query, expectedResult, queryBuilder.build());
+    }
+
+    @And("Wartość w kolumnie {string} tabeli {string} jest równa {string} gdy przefiltruję po kolumnie {string} wartością {string}")
+    public void validateValueInTableWithAppliedFilter(String columnName, String tableName, String expectedResult, String filterName, String filterValue) throws SQLException, IOException {
+        QueryModel.QueryModelBuilder queryBuilder = QueryModel.builder();
+        queryBuilder.columnName(columnName);
+        queryBuilder.tableName(tableName);
+        queryBuilder.filterName(filterName);
+        queryBuilder.filterValue(filterValue);
+
+        final String query = DataUtil.readQueryFromFile("Scripts/validateDataWithFilter.sql");
+        queryExecutor = new QueryExecutor().validateValueInTableWithAppliedFilter(query, expectedResult, queryBuilder.build());
+    }
+
+    @Given("Wartość w kolumnie {string} tabeli {string} jest równa {string}")
+    public void validateValueInTable(String columnName, String tableName, String expectedResult) throws SQLException, IOException {
+        QueryModel.QueryModelBuilder queryBuilder = QueryModel.builder();
+        queryBuilder.columnName(columnName);
+        queryBuilder.tableName(tableName);
+
+        final String query = DataUtil.readQueryFromFile("Scripts/validateData.sql");
+        queryExecutor = new QueryExecutor().validateValueInTable(query, expectedResult, queryBuilder.build());
+    }
+
+    @And("Czyszczę bazę skryptem {string} z ustawionym filtrem {string}")
+    public void deleteTestDataWithAppliedFilter(String fileName, String filterValue) throws SQLException, IOException {
+        QueryModel queryModel = QueryModel.builder()
+                .filterValue(filterValue)
+                .build();
+
+        final String query = DataUtil.readQueryFromFile(fileName);
+        queryExecutor = new QueryExecutor().deleteTestDataWithAppliedFilter(query, queryModel);
+    }
+
+    @And("Czyszczę bazę po wykonaniu testu skryptem {string} z ustawionym filtrem {string}")
+    public void deleteTestDataWithAppliedFilterAfterTest(String fileName, String filterValue) throws IOException, SQLException {
+        QueryModel.QueryModelBuilder queryBuilder = QueryModel.builder();
+        queryBuilder.filterValue(filterValue);
+
+        final String query = DataUtil.readQueryFromFile(fileName);
+        queryExecutor.deleteTestDataWithAppliedFilter(query, queryBuilder.build());
+    }
+
+
+    @And("Czyszczę bazę przed rozpoczęciem testu skryptem {string} z ustawionym filtrem {string}")
+    public void deleteTestDataWithAppliedFilterBeforeTest(String fileName, String filterValue) throws IOException, SQLException {
+        QueryModel.QueryModelBuilder queryBuilder = QueryModel.builder();
+        queryBuilder.filterValue(filterValue);
+
+        final String query = DataUtil.readQueryFromFile(fileName);
+        queryExecutor.deleteTestDataWithAppliedFilter(query, queryBuilder.build());
+    }
+}
