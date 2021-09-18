@@ -1,4 +1,4 @@
-# JavaRestAssured Test Framework
+# Template of java soap/rest/ui/db framework
 [![GitHub issues](https://img.shields.io/github/issues/przemastro/java-soap-rest-db-ui-framework)](https://github.com/przemastro/java-soap-rest-db-ui-framework/issues)
 [![GitHub forks](https://img.shields.io/github/forks/przemastro/java-soap-rest-db-ui-framework)](https://github.com/przemastro/java-soap-rest-db-ui-framework/network)
 [![GitHub stars](https://img.shields.io/github/stars/przemastro/java-soap-rest-db-ui-framework)](https://github.com/przemastro/java-soap-rest-db-ui-framework/stargazers)
